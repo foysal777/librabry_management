@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css_add %}
+<style>
+  body {
+    background-color: rgb(255, 255, 255);
+  }
+</style>
+{% endblock %}
+{% block main %}
+
+<h2 class="text-center">Borrowed Books</h2>
+{% if borrowed_books %}
+<div class="table_div p-5">
+  <table class="table table-striped table-hover container">
+    <thead class="table-dark">
+      <tr>
+        <th scope="col">ID</th>
+        <th scope="col">Book Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">User Review</th>
+        <th scope="col">Book Price</th>       
+        <th scope="col">Remaining Balance</th>
+        <th scope="col">Return Due Date</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for borrowed_book in borrowed_books %}
+      <tr>
+        <td>{{ borrowed_book.book.id }}</td>
+        <td>{{ borrowed_book.book.tittle }}</td>
+        <td>{{ borrowed_book.book.description }}</td>
+        <td>{{ borrowed_book.book.user_review }}</td>
+        <td>{{ borrowed_book.book.borrow_price }}</td>
+        <td>{{ borrowed_book.remain }}</td>
+       
+
+
+        </td>
+        <td>{{ borrowed_book.book.dates }}</td>
+        <td>
+          <a href="#" class="btn btn-danger btn-sm">Return</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% else %}
+<h2>There are no borrowed books</h2>
+{% endif %}
+
+{% endblock %}

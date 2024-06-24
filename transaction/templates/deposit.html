@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Deposit{% endblock %}
+
+{% block css_add %}
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f0f0;
+        margin: 0;
+    }
+    .deposit-form-container {
+        background-color: #80bdf7;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(126, 173, 235, 0.5); 
+        width: 600px;
+        height: 300px;
+        text-align: center;
+    }
+    .deposit-form-container h2 {
+        color: #ffffff; 
+    }
+    .deposit-form-container form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .deposit-form-container form .form-field {
+        margin-bottom: 15px;
+        width: 100%;
+    }
+    .deposit-form-container form button {
+        padding: 10px 20px;
+        background-color: #ffffff; /* White button background */
+        color: #0000ff; /* Blue button text color */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    .deposit-form-container form button:hover {
+        background-color: #f0f0f0; 
+    }
+</style>
+{% endblock %}
+
+{% block main %}
+<div class="deposit-form-container">
+    <h2 class="text-dark" >Make a Deposit</h2> <br>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-field fw-bold">
+            {{ form.amount.label_tag }}
+            {{ form.amount }}
+        </div>
+        <br>
+        <button class="text-dark fw-bold"  type="submit">Deposit</button>
+    </form>
+</div>
+{% endblock %}

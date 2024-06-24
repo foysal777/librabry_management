@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block css_add %}
+<style>
+  .bg img {
+        height: 15rem;
+        transition: transform 0.3s ease-in-out; 
+    }
+
+    .bg img:hover {
+        transform: scale(1.2); 
+    }
+
+    .gutter{
+
+        background-color: rgb(255, 255, 255);
+        border-radius: 7px;
+    }
+    .gutter:hover{
+
+background-color: #0e0e0e;
+color: rgb(0, 0, 0);
+}
+
+.home{
+
+    background-color: rgb(255, 255, 255);
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    color: rgb(0, 0, 0);
+}
+</style>
+{% endblock %}
+{% block main %}
+
+
+
+<h2 class="text-center mt-5  fw-bold text-dark">All Kind of Book List here </h2>
+
+<!-- slug filter  -->
+<section class="mt-5">
+
+    <div class="container">
+        <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+         {% for i in data2 %}
+          <div class="col text-center">
+            <a href="{% url 'slug_name' i.slug %}" class="gutter p-3 border border-2 text-dark border-dark fw-bold d-block " style="text-decoration: none;">
+                {{ i.tittle }}
+            </a>
+
+          </div>  
+          {% endfor %}
+        </div>
+      </div>
+
+</section> 
+
+<div class="text-center mt-4 fw-bold"> 
+    <small class="text-center text-danger" >  {{  data2 | length }} Books are Available </small>
+</div>
+
+
+
+<section class="d-flex flex-wrap justify-content-center gap-3 mt-5">
+    {% for i in data %}
+    <div class="card col-sm-3" style="width: 18rem;">
+        <img src="{{ i.image.url }}" class="card-img-top" alt="Not found" height="270px">
+        <div class="card-body">
+            <h5 class="card-title">Name : {{ i.tittle }}</h5>
+            <h5 class="card-title"> Description : {{ i.description }}</h5>
+            <h5 class="card-title"> Review :{{ i.user_review }}</h5>
+            <h5 class="card-title"> Price : {{ i.borrow_price }}</h5> 
+            <a href="{% url 'details' i.id %}" class="btn btn-success">View Details</a>
+        </div>
+    </div>
+    {% endfor %}
+</section>
+
+
+
+
+<br><br>
+
+
+
+
+
+
+
+{% endblock %}

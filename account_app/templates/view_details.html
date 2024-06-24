@@ -1,0 +1,88 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block css_add %}
+<style>
+.des {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+
+.card-body {
+    background-color: #ffffff;
+    color: rgb(0, 0, 0);
+    text-align: left;
+    padding: 40px;
+    border-radius: 5px;
+}
+
+.card-title {
+    margin-bottom: 0;
+}
+.car_image img {
+    border-radius: 5px;
+}
+.btn:hover {
+    background-color: rgb(31, 126, 43);
+}
+</style>
+{% endblock %}
+{% block main %}
+<section class="d-flex">
+    <div class="car_image col-lg-6 p-4">
+        <img src="{{ data.image.url }}" class="card-img-top" height=600px alt="Not found" />
+    </div>
+    <div class="des col-lg-6 p-4">
+        <div class="card-body">
+            <h2 class="card-title p-2">Book Name: {{ data.tittle }}</h2>
+            <h4 class="card-title p-2">Description: {{ data.description }}</h4>
+            <h4 class="card-title p-2">Review: {{ data.user_review }}</h4>
+            <h4 class="card-title p-2">Borrow Price: {{ data.borrow_price }}</h4>
+            <br>
+            {% if request.user.is_authenticated %}
+            <div class="d-grid gap-2 col-6 mx-auto">
+                <form action="{% url 'borrow_book' data.id %}" method="post">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-lg btn-danger">Borrow Now</button>
+                </form>
+                <br><br>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+{% if request.user.is_authenticated %}
+<div class="container">
+    <h1 class="text-center p-5 fw-bold text-success"><u>BOOK REVIEW</u></h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card m-2">
+                <h5 class="p-3">Total Reviews: {{ comments|length }}</h5>
+                {% for comment in comments %}
+                    <div class="card-body border m-2">
+                        <p><b>{{ comment.name }}</b> {{ comment.show_date }}</p>
+                        <p>{{ comment.comment_here }}</p>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card p-3">
+                <form method="post">
+                    {% csrf_token %}
+                    {{ comment_form|crispy }}
+                    <button class="btn btn-success" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+<br><br>
+{% endblock %}
